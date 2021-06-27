@@ -1,0 +1,11 @@
+.paragraph-title{
+    font-size: 18px;
+    font-weight: bolder;
+    margin-left: 45px;
+    font-family: Arial, serif;
+}
+.paragraph-text{
+    font-size: 15px;
+    font-style: italic;
+    font-family: "Times New Roman", serif;
+}
