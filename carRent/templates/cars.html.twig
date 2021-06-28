@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+{% block mainArea %}
+    <div class="container mb-0" style="padding-bottom: 120px">
+        <div class="row d-flex justify-content-center" >
+            <div class="col-md-4">
+                {% for car in carList %}
+                <div class="card mb-3"  style="height: 20%">
+                    <img src="{{ car.imgSource}}">
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="col-md-5">
+                {% for car in carList %}
+                <div class="card mb-3" style="height: 20%" >
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.title }}</h5>
+                        <p class="card-text">{{ car.description }}</p>
+                    </div>
+                    <div class="card-footer text-center" style="background: none">
+                        <a class="btn btn-outline-info my-2 my-sm-0" href="index.php?page=cars&car={{ car.id }}">
+                            Zobacz więcej!</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock mainArea %}
+{% block date %}
+    <p style="float: left">{{ date }}</p>  <p style="float: right">{{ session.email }}</p>
+{% endblock date %}

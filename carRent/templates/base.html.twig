@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    {% block calendarLinks %}
+    {% endblock calendarLinks %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/cssFiles/CarRent.css">
+    <title> CarRent</title>
+    <style>
+        {% block styles %}
+        html {
+            position: relative;
+            min-height: 100%;
+
+        }
+
+        body {
+            padding-top: 70px;
+            margin-bottom: 60px;
+
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            line-height: 60px;
+            background-color: #e3f2fd;
+            clear: both;
+        }
+
+        {% endblock styles %}
+    </style>
+    {% block scripts %}
+    {% endblock scripts %}
+</head>
+<body {% block bodyProp %} {% endblock bodyProp %}>
+<div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light fixed-top" style="background-color: #e3f2fd ">
+        <div class="container">
+            <a class="navbar-brand" href="index.php?page=main">
+                <img src="/images/car_icon.png" width="35" height="30" class="d-inline-block align-top" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="colapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php?page=main">Strona główna</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=cars">Samochody</a>
+                    </li>
+                    {% if not session.id %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=register">Rejestracja</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=account">Konto</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+            {% if  not session.id %}
+                <form action="" method="POST" class="form-inline my-2 my-lg-0">
+                    <input type="text" name="main_login" class="form-control mr-sm-2" placeholder="Login"
+                           aria-label="login"
+                           style="width: 150px;">
+                    <input type="password" name="main_password" class="form-control mr-sm-2" placeholder="Hasło"
+                           aria-label="password" style="width: 150px;">
+                    <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Zaloguj się</button>
+                </form>
+            {% else %}
+                <form action="" method="POST" class="form-inline my-2 my-lg-0">
+                    <button class="btn btn-outline-info my-2 my-sm-0" name="logOut" type="submit">Wyloguj</button>
+                </form>
+            {% endif %}
+
+        </div>
+    </nav>
+</div>
+{% if session.loginFail %}
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <img src="/images/xSign.png" class="rounded float-left" height="35" width="35">
+                <p class="paragraph-title">Zły login lub hasło!</p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% block mainArea %}
+{% endblock mainArea %}
+
+<footer class="footer mt-auto" >
+    <div class="container">
+        <span class="text-muted">
+            {% block date %} {% endblock %}
+        </span>
+    </div>
+</footer>
+
+</body>
+</html>
+
+

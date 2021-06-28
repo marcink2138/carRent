@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block styles %}
+    {{ parent() }}
+{% endblock styles %}
+{% block mainArea %}
+    <div class="container mb-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="card mb-3" style="margin-top: 30%">
+                    <div class="card-header" style="background-color: #e3f2fd">
+                        Załóż konto!
+                    </div>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Adres Email</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   aria-describedby="emailHelp" name="registerLogin">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Hasło</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                   name="registerPassword">
+                        </div>
+                        <div style="border-top: solid rgba(0, 0, 0, 0.125) 1px">
+                            <div style="margin-top: 5px"><button type="submit" class="btn btn-outline-info btn-lg my-2 my-sm-0">Zarejestruj!</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% if not status %}
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-md-4">
+                            <img src="/images/xSign.png" class="rounded float-left" height="35" width="35">
+                            <p class="paragraph-title">Konto o podanym adresie e-mail znajduje się w bazie danych!</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock mainArea %}
+{% block date %}
+    <p style="float: left">{{ date }}</p>  <p style="float: right">{{ session.email }}</p>
+{% endblock date %}

@@ -1,0 +1,255 @@
+{% extends "base.html.twig" %}
+{% block styles %}
+    {{ parent() }}
+    .list-group-item.active {
+    background-color: #e3f2fd;
+    border-color: #e3f2fd;
+    color: black;
+    }
+{% endblock styles %}
+{% block scripts %}
+    <script type="text/javascript">
+        var imagesCars = [];
+        var imagesCities = [];
+        x = 0;
+        imagesCars[0] = "/images/citroen.png";
+        imagesCars[1] = "/images/audi.png";
+        imagesCars[2] = "/images/ford.png";
+        imagesCars[3] = "/images/fiat.png";
+        imagesCars[4] = "/images/honda.png";
+
+        imagesCities[0] = "/images/krakow.jpg";
+        imagesCities[1] = "/images/warszawa.jpg";
+        imagesCities[2] = "/images/wroclaw.jpg";
+        imagesCities[3] = "/images/poznan.jpg";
+        imagesCities[4] = "/images/gdansk.jpg";
+
+        function displayNextImage() {
+            x = (x === imagesCars.length - 1) ? 0 : x + 1;
+            document.getElementById("car_img").src = imagesCars[x];
+            document.getElementById("city_img").src = imagesCities[x];
+        }
+
+        $().ready(function () {
+
+            setInterval(displayNextImage, 3000);
+
+        });
+
+
+    </script>
+{% endblock scripts %}
+
+{% block bodyProp %}
+
+{% endblock bodyProp %}
+
+
+{% block mainArea %}
+
+    <div class="container mb-0">
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3" style="height: 30%; border: none">
+                    <div class="card-body">
+                        <img src="/images/pigIcon.png" class="rounded float-left" height="35" width="35">
+                        <p class="paragraph-title">Niskie ceny</p>
+                    </div>
+                </div>
+                <div class="card mb-3" style="height: 45%">
+                    <div class="card-body">
+                        <p class="paragraph-text">Najniższe ceny wśród konkurencji. Brak ukrytych opłat - odrazu wiesz
+                            ile płacisz!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3" style="height: 30%; border: none">
+                    <div class="card-body">
+                        <img src="/images/calendar.png " class="rounded float-left" height="35" width="35">
+                        <p class="paragraph-title">Długie terminy wypożyczeń</p>
+                    </div>
+                </div>
+                <div class="card mb-3" style="height: 45%">
+                    <div class="card-body">
+                        <p class="paragraph-text">Potrzebujesz samochodu na więcej niż dwa tygodnie? Dla nas nie ma
+                            rzeczy niemożliwych!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-3" style="height: 30%; border: none">
+                    <div class="card-body">
+                        <img src="/images/security.png " class="rounded float-left" height="35" width="35">
+                        <p class="paragraph-title">Gwarancja bezpieczeństwa</p>
+                    </div>
+                </div>
+                <div class="card mb-3" style="height: 45%">
+                    <div class="card-body">
+                        <p class="paragraph-text">Nie musisz się obawiać awarii samochodu. Co trzy miesiące pojazdy
+                            przechodzą kontrole!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3" style="height: 95%">
+
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Nasze pojazdy
+                        </h5>
+                    </div>
+
+                    <img src="/images/honda.png" id="car_img">
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3" style="height: 95%">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Odbiór w wielu największych miastach
+                        </h5>
+                    </div>
+                    <img src="/images/krakow.jpg" id="city_img">
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3" style="border: none">
+            <h5 class="card-title">
+                Najczęściej zadawane pytania
+            </h5>
+            <div id="accordion">
+                <div class="card" style="background-color: transparent">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    style="background-color: transparent; border: transparent; color: black"
+                                    data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="true" aria-controls="collapseOne">
+                                Ile muszę mieć lat, aby wypożyczyć samochód?
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            Wszystko
+                            zależy od tego, od jakiego czasu masz
+                            prawojazdy. Samochody wypożyczamy tylko osobą które, mają co najmniej 2 lata
+                            doświadczenia
+                            za kółkiem.
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="background-color: transparent">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    style="background-color: transparent; border: transparent; color: black"
+                                    data-toggle="collapse" data-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                Co muszę mieć przy sobie podczas
+                                odbierania samochodu?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                        <div class="card-body">
+                            Po zaksięgowaniu płatności wystarczy że okażesz nam ważne prawo jazdy. Jeśli płatność
+                            będzie
+                            niezaksięgowania, będziemy wymagać potwierdzenia.
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="background-color: transparent">
+                    <div class="card-header" id="headingThree">
+                        <h5 class="mb-0">
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    style="background-color: transparent; border: transparent; color: black"
+                                    data-toggle="collapse" data-target="#collapseThree"
+                                    aria-expanded="false" aria-controls="collapseThree">
+                                Co zrobić jeśli dojdzie do awarii
+                                nie zależnej ode mnie?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseThree" class="collapse"
+                         style="background-color: transparent; border: transparent; color: black"
+                         aria-labelledby="headingThree" data-parent="#accordion">
+                        <div class="card-body">
+                            Jeśli w jakiś sposób dojdzie do nieoczekiwanej awarii pojazdu, zadbamy o to, abyś
+                            niezwłocznie dostał odpowiednią pomoc.
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="background-color: transparent">
+                    <div class="card-header" id="headingFour">
+                        <h5 class="mb-0">
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    style="background-color: transparent; border: transparent; color: black"
+                                    data-toggle="collapse" data-target="#collapseFour"
+                                    aria-expanded="false" aria-controls="collapseFour">
+                                Jakie konsekwencje czekają mnie,
+                                kiedy doprowadzę do wypadku?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                        <div class="card-body">
+                            Wszystkie informacje na ten temat zostaną przedstawione przed odbiorem pojazdu.
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="background-color: transparent">
+                    <div class="card-header" id="headingFive">
+                        <h5 class="mb-0">
+                            <button class="btn btn-primary btn-lg btn-block"
+                                    style="background-color: transparent; border: transparent; color: black"
+                                    data-toggle="collapse" data-target="#collapseFive"
+                                    aria-expanded="false" aria-controls="collapseFive">
+                                Chce odwołać rezerwację. Do
+                                kiedy mogę to zrobić?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                        <div class="card-body">
+                            Odwołać rezerwacje możesz w dowolnym momencie. Jeśli dokonasz to w ostatniej dobie przed
+                            planowanym odbiorem to pobierzemy opłate w wysokości 10% ceny rezerwacji.
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="background-color: transparent; margin-bottom: 5%">
+                    <div class="card-header" id="headingSix">
+                        <h5 class="mb-0">
+                            <button class="btn btn-primary btn-lg btn-block "
+                                    style="background-color: transparent; border: transparent; color: black"
+                                    data-toggle="collapse"
+                                    data-target="#collapseSix"
+                                    aria-expanded="false" aria-controls="collapseSix">
+                                Czy w pojazdach można palić?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                        <div class="card-body">
+                            W naszych samochodach obowiązuje kategoryczny zakaz palenia wyrobów tytoniowych/
+                            e-papierosów. Co więcej jeśli samochód wróci do nas w złym stanie pobierzemy opłate.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock mainArea %}
+{% block date %}
+   <p style="float: left">{{ date }}</p>  <p style="float: right">{{ session.email }}</p>
+{% endblock date %}

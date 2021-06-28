@@ -1,0 +1,199 @@
+{% extends("base.html.twig") %}
+{% block calendarLinks %}
+    <link rel="stylesheet" href="/fullcalendar-5.8.0/lib/main.css">
+    <script src="/fullcalendar-5.8.0/lib/main.js"></script>
+{% endblock calendarLinks %}
+{% block styles %}
+    {{ parent() }}
+    .options-border{
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.03);
+    margin-top: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+{% endblock styles %}
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+
+                events: {{ dates | json_encode | raw }}
+
+            });
+            calendar.render();
+        });
+    </script>
+
+{% endblock scripts %}
+{% block mainArea %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ car.title }}</h5>
+                    </div>
+                    <img src={{ car.imgSource }}>
+
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Dane szczegółowe</h5>
+                        {{ car.secondDescription | raw }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+
+                    <div class="card-body">
+                        <h5 class="card-title" style="border-bottom: 1px solid black">Zarezerwuj termin!</h5>
+                        <div id='calendar'></div>
+                        <div style="margin-top: 5px">
+                            <div style="background-color: #ffb4b4; height: 30px; width: 30px;border: 1px solid black; margin-right: 10px;float: left">
+
+                            </div>
+                             <p style="float: left"> Zarezerwowane terminy</p>
+                            <div style="background-color: #fffcdc; height: 30px; width: 30px;border: 1px solid black; margin-left: 100px;margin-right: 10px;float: left">
+
+                            </div>
+                            <p> Dzisiaj</p>
+                        </div>
+                        {% if session.id and not session.carRented %}
+                            <form action method="post">
+                                <div class="form-row" style="margin-top: 5px">
+                                    <div class="col-12 options-border">
+                                        <label for="dataDiv"> Wybierz dzień rozpączęcia oraz zakończenia
+                                            wypożyczenia!</label>
+                                    </div>
+                                    <div class="col-6" id="dataDiv">
+                                        <label for="rentStart">Start</label>
+                                        <input type="date" class="form-control" id="rentStart" name="rentStart"
+                                               min='{{ date }}' value='{{ date }}'>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="rentEnd">Koniec</label>
+                                        <input type="date" class="form-control" id="rentEnd" name="rentEnd"
+                                               min='{{ date }}' value='{{ date }}'>
+
+                                    </div>
+                                    <div class="col-12 options-border">
+                                        <label for="radiosLabel"> Ubezpieczenie</label>
+                                    </div>
+                                    <div class="col-4" style="margin-top: 5px">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="addRadios"
+                                                   id="addPremium" value="200">
+                                            <label for="addPremium" class="form-check-label">Premium (+200zł)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" style="margin-top: 5px">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="addRadios"
+                                                   id="addStandard" value="100">
+                                            <label for="addStandard" class="form-check-label">Standard (+100zł) </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4" style="margin-top: 5px">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="addRadios" id="addNone"
+                                                   value="0" checked>
+                                            <label for="addNone" class="form-check-label">Brak (+0zł)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 options-border" style="margin-bottom: 5px">
+                                        <label for="dataDiv">Zarezerwuj!</label>
+                                    </div>
+                                    <div class="col-3" id="acceptDiv">
+                                        <input type="text" class="form-control" name ="totalCost" id="totalCost" readonly="readonly"
+                                               style="background-color: transparent">
+                                    </div>
+                                    <div class="col-9">
+                                        <button class="btn btn-outline-info my-2 my-sm-0" style="float: right"
+                                                name="bookButton" id="button" type="submit">Rezerwuj!
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
+                    {% if not session.id %}
+                        <div class="card-footer text-muted">
+                            Zaloguj się aby dokonać rezerwacji! Jeśli nie masz konta możesz je założyć <a href="index.php?page=register">tutaj</a>!
+                        </div>
+                    {% elseif session.carRented %}
+                        <div class="card-footer text-muted">
+                            Dokonałeś już rezerwacji. Wejdź w <a href="index.php?page=account"> konto</a>, aby zobaczyć
+                            szczegóły
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        document.getElementById('rentStart').addEventListener("change", showCost_Errors);
+        document.getElementById('rentEnd').addEventListener("change", showCost_Errors);
+        document.getElementById('addPremium').addEventListener("click", showCost_Errors);
+        document.getElementById('addStandard').addEventListener("click", showCost_Errors);
+        document.getElementById('addNone').addEventListener("click", showCost_Errors);
+
+
+        function showCost_Errors() {
+            var startDate = new Date(document.getElementById('rentStart').value);
+            var endDate = new Date(document.getElementById('rentEnd').value);
+            var addPremium = document.getElementById('addPremium');
+            var addStandard = document.getElementById('addStandard');
+            var addNone = document.getElementById('addNone');
+            var phpData = {{ dates | json_encode | raw }};
+            console.log(phpData)
+            var diff = Math.abs(endDate - startDate);
+            var j = diff / (1000 * 3600 * 24);
+            var isValid;
+            if (phpData.length) {
+                for (i = 0; i < phpData.length; i++) {
+                    var anotherClientStart = new Date(phpData[i].start);
+                    var anotherClientEnd = new Date(phpData[i].end)
+                    anotherClientEnd.setDate(anotherClientEnd.getDate() - 1);
+                    console.log(anotherClientStart);
+                    console.log(startDate);
+                    console.log(anotherClientEnd)
+                    console.log(endDate)
+
+                    if (endDate < anotherClientStart || anotherClientEnd < startDate)
+                        isValid = true;
+                    else
+                        isValid = false;
+                }
+            } else {
+                isValid = true;
+            }
+            if (addPremium.checked) {
+                var extra = addPremium.value;
+            } else if (addStandard.checked)
+                extra = addStandard.value;
+            else
+                extra = addNone.value;
+            if (startDate < endDate && isValid) {
+                document.getElementById('totalCost').value = parseInt(j) * {{ car.cost }} +parseInt(extra) + ' zł';
+                document.getElementById('totalCost').style.color = "black";
+                document.getElementById('button').disabled = false;
+            } else {
+                document.getElementById('totalCost').value = 'Źle dobrane daty!';
+                document.getElementById('totalCost').style.color = "red";
+                document.getElementById('button').disabled = true;
+            }
+        }
+
+
+    </script>
+{% endblock mainArea %}
+{% block date %}
+    <p style="float: left">{{ date }}</p>  <p style="float: right">{{ session.email }}</p>
+{% endblock date %}

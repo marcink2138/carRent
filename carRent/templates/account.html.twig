@@ -1,0 +1,86 @@
+{% extends ("base.html.twig") %}
+{% block calendarLinks %}
+    <link rel="stylesheet" href="/fullcalendar-5.8.0/lib/main.css">
+    <script src="/fullcalendar-5.8.0/lib/main.js"></script>
+{% endblock calendarLinks %}
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+
+                events: [
+                    {
+                        title: 'Twoja rezerwacja',
+                        start: '{{ userLoan.loanStart }}',
+                        end: '{{ userLoan.loanEnd }}',
+                        display: 'background',
+                        color: 'red'
+                    }
+                ]
+
+            });
+            calendar.render();
+        });
+    </script>
+
+{% endblock scripts %}
+{% block mainArea %}
+    <div class="container">
+        {% if session.carRented %}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header" style="background-color: #e3f2fd">
+                            <h5 class="card-title"> Twoja rezerwacja </h5>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ car.title }}</h5>
+                        </div>
+                        <img src={{ car.imgSource }}>
+                        <div class="card-footer" style="background-color: #e3f2fd">
+                            Cena najmu: {{ userLoan.fee }} zł
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p class="card-text"> Jeśli chcesz zrezygnować ze swojej rezerwacji skontaktuj się z naszą
+                                infolinią <a href="http://www.google.com">+48 997 213 721</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title" style="border-bottom: 1px solid black">Twoja rezerwacja!</h5>
+                            <div id='calendar'></div>
+                            <div style="margin-top: 5px">
+                                <div style="background-color: #ffb4b4; height: 30px; width: 30px;border: 1px solid black; margin-right: 10px;float: left">
+
+                                </div>
+                                <p style="float: left"> Twoja rezerwacja</p>
+                                <div style="background-color: #fffcdc; height: 30px; width: 30px;border: 1px solid black; margin-left: 100px;margin-right: 10px;float: left">
+
+                                </div>
+                                <p> Dzisiaj</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div>
+                <img src="/images/sadEmoji2.png" style="display: block; margin-left: auto; margin-right: auto" ;
+                     width="15%" ; height="15%">
+            </div>
+            <p style="text-align: center; margin-top: 5px"> Niestety nie wypożyczyłeś jeszcze żadnego pojazdu :(( <br> Przejrzyj naszą <a
+                        href="index.php?page=cars"> ofertę</a>!</p>
+        {% endif %}
+    </div>
+{% endblock mainArea %}
+{% block date %}
+    <p style="float: left">{{ date }}</p>  <p style="float: right">{{ session.email }}</p>
+{% endblock date %}
